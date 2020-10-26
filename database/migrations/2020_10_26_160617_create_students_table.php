@@ -28,13 +28,10 @@ class CreateStudentsTable extends Migration
             $table->string('nationality');
             $table->string('place_of_birth')->nullable();
             $table->enum('blood_group',['O-','O+','A+','A-','B+','B-','AB+','AB-'])->nullable();
-            $table->tinyInteger('experience')->nullable();
             $table->string('previous_school')->nullable();
-            $table->string('job_quit_reason')->nullable();
-            $table->string('father_name')->nullable();
-            $table->string('mother_name')->nullable();
-            $table->string('guardian_name')->nullable();
-            $table->unsignedBigInteger('guardian_contact')->nullable();
+            $table->tinyInteger('previous_class')->nullable();
+            $table->string('leaving_reason')->nullable();
+            $table->string('refrence')->nullable();
             $table->boolean('is_confirmed')->default(0);
             $table->softDeletes();
             $table->timestamps();
