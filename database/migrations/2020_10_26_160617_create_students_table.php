@@ -15,6 +15,28 @@ class CreateStudentsTable extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
+            $table->string('first_name');
+            $table->string('last_name')->nullable();
+            $table->unsignedBigInteger('contact')->nullable();
+            $table->string('email')->unique()->nullable();
+            $table->date('dob')->nullable();
+            $table->unsignedBigInteger('aadhar_no')->unique()->nullable();
+            $table->string('picture')->nullable();
+            $table->string('family_picture')->nullable();
+            $table->enum('gender',['male','female','other']);
+            $table->enum('caste',['GEN-EWS','SC','ST','OBC-NCL','other'])->nullable();
+            $table->string('nationality');
+            $table->string('place_of_birth')->nullable();
+            $table->enum('blood_group',['O-','O+','A+','A-','B+','B-','AB+','AB-'])->nullable();
+            $table->tinyInteger('experience')->nullable();
+            $table->string('previous_school')->nullable();
+            $table->string('job_quit_reason')->nullable();
+            $table->string('father_name')->nullable();
+            $table->string('mother_name')->nullable();
+            $table->string('guardian_name')->nullable();
+            $table->unsignedBigInteger('guardian_contact')->nullable();
+            $table->boolean('is_confirmed')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

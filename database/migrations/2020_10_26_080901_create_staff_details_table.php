@@ -28,6 +28,7 @@ class CreateStaffDetailsTable extends Migration
             $table->enum('caste',['GEN-EWS','SC','ST','OBC-NCL','other'])->nullable();
             $table->enum('marital_status',['married','unmarried'])->nullable();
             $table->string('nationality');
+            $table->enum('blood_group',['O-','O+','A+','A-','B+','B-','AB+','AB-'])->nullable();
             $table->tinyInteger('experience')->nullable();
             $table->string('previous_school')->nullable();
             $table->string('job_quit_reason')->nullable();
