@@ -19,7 +19,22 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
+/*
+|--------------------------------------------------------------------------
+| Post Api
+|--------------------------------------------------------------------------
+*/
+
+//student store post api
+
+Route::post('/v1/student/create','student\StudentController@student_store');
+
+//student update post api
+
+Route::match(['put','patch'],'/v1/student/{id}','StudentController@student_update'); 
+
+
 
 //authentication route
 
-Route::post('token', 'Laravel\Passport\Http\Controllers\AccessTokenController@issueToken');
+Route::post('/v1/token', 'Laravel\Passport\Http\Controllers\AccessTokenController@issueToken'); //done
