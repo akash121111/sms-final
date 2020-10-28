@@ -29,6 +29,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/v1/student/new','\App\Http\Controllers\StudentController@student_store');  //done
 
+//student address store post api
+
+Route::post('/v1/student/address/new','\App\Http\Controllers\StudentController@student_address_store');  //done
+
 
 
 /*
@@ -41,6 +45,10 @@ Route::post('/v1/student/new','\App\Http\Controllers\StudentController@student_s
 //student update  api
 
 Route::match(['put','patch'],'/v1/student/edit/{id}','\App\Http\Controllers\StudentController@student_update'); //done 
+
+//student address update api
+
+Route::match(['put','patch'],'/v1/student/address/edit/{id}','\App\Http\Controllers\StudentController@student_address_update'); //done 
 
 
 

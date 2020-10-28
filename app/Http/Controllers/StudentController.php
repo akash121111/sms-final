@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use Illuminate\Http\Request;
+use App\Models\Address;
 
 use Carbon\Carbon;
 use Validator;
@@ -107,6 +108,84 @@ class StudentController extends Controller
         }
     }
 
+
+
+
+     public function student_address_store(Request $request){
+        $address=new Address();
+
+        $rules=[
+            'street'=>'required',
+            'postal_code' => 'required|digits:6',
+            'address_type'=>'required',
+            'country'=>'required',
+            'state'=>'required',
+            'student_id' => 'required|numeric|exists:App\Models\Student,id'
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if($validator->fails()){
+            return response()->json($validator->errors(),400);
+        }
+        $address->address_type=$request->address_type;
+        $address->house_number=$request->house_number;
+        $address->street=$request->street;
+        $address->city=$request->city;
+        $address->state=$request->state;
+        $address->country=$request->country;
+        $address->postal_code=$request->postal_code;
+        $address->near_by=$request->near_by;
+        $address->student_id=$request->student_id;
+
+        if($address->save()){
+            return [
+                'Status' => 202,
+                'message'=> 'data saved'
+        ];
+        }
+        else{
+            return [
+                'Status' => 400,
+                'message'=> 'something went wrong'
+            ];
+        }
+    }
+
+
+
+    public function student_address_update(Request $request, $id){
+
+            $address=Address::find($id);
+            if(is_null($address)){
+                return response()->json('Record not Found',404);
+            }
+
+ $rules=[
+            'street'=>'required',
+            'city'=>'required',
+            'postal_code' => 'required|digits:6',
+            'address_type'=>'required',
+            'country'=>'required',
+            'state'=>'required',
+            'student_id' => 'required|numeric|exists:App\Model\Student,id'
+        ];
+
+            $result=$address->update($request->all());
+    
+            if($result){
+                return [
+                    'Status' => 202,
+                    'message'=> 'data updated'
+            ];
+            }
+            else{
+                return [
+                    'Status' => 400,
+                    'message'=> 'something went wrong'
+                ];
+            }
+        }
 
 
 }

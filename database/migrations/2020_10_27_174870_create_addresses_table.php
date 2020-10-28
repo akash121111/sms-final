@@ -15,7 +15,7 @@ class CreateAddressesTable extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
-            $table->enum('adreess_type',['local','permanent']);
+            $table->enum('address_type',['local','permanent']);
             $table->string('house_number')->nullable();
             $table->string('street');   
             $table->string('city');
