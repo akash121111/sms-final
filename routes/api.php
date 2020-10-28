@@ -27,11 +27,21 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //student store post api
 
-Route::post('/v1/student/create','student\StudentController@student_store');
+Route::post('/v1/student/new','\App\Http\Controllers\StudentController@student_store');  //done
 
-//student update post api
 
-Route::match(['put','patch'],'/v1/student/{id}','StudentController@student_update'); 
+
+/*
+|--------------------------------------------------------------------------
+| update Api
+|--------------------------------------------------------------------------
+*/
+
+
+//student update  api
+
+Route::match(['put','patch'],'/v1/student/edit/{id}','\App\Http\Controllers\StudentController@student_update'); //done 
+
 
 
 

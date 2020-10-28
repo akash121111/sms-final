@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\student;
+namespace App\Http\Controllers;
 
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 class StudentController extends Controller
 {
     
+    protected $namespace = 'App\Http\Controllers';
 
     public function student_store(Request $request){
 
