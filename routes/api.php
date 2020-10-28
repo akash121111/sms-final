@@ -35,6 +35,16 @@ Route::post('/v1/student/address/new','\App\Http\Controllers\StudentController@s
 
 
 
+//staff store post api
+
+Route::post('/v1/staff/new','\App\Http\Controllers\StaffDetailController@staff_store');  //done
+
+//staff address store post api
+
+Route::post('/v1/staff/address/new','\App\Http\Controllers\StaffDetailController@staff_address_store');  //done
+
+
+
 /*
 |--------------------------------------------------------------------------
 | update Api
@@ -49,6 +59,16 @@ Route::match(['put','patch'],'/v1/student/edit/{id}','\App\Http\Controllers\Stud
 //student address update api
 
 Route::match(['put','patch'],'/v1/student/address/edit/{id}','\App\Http\Controllers\StudentController@student_address_update'); //done 
+
+
+//student update  api
+
+Route::match(['put','patch'],'/v1/staff/edit/{id}','\App\Http\Controllers\StaffDetailController@staff_update'); //done 
+
+//student address update api
+
+Route::match(['put','patch'],'/v1/staff/address/edit/{id}','\App\Http\Controllers\StaffDetailController@staff_address_update'); //done 
+
 
 
 
