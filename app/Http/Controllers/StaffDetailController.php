@@ -117,4 +117,85 @@ class StaffDetailController extends Controller
     }
 
 
+
+
+    public function staff_address_store(Request $request){
+        $address=new Address();
+
+        $rules=[
+            'street'=>'required',
+            'postal_code' => 'required|digits:6',
+            'address_type'=>'required',
+            'country'=>'required',
+            'state'=>'required',
+            'staff_id' => 'required|numeric|exists:App\Models\StaffDetail,id'
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if($validator->fails()){
+            return response()->json($validator->errors(),400);
+        }
+        $address->address_type=$request->address_type;
+        $address->house_number=$request->house_number;
+        $address->street=$request->street;
+        $address->city=$request->city;
+        $address->state=$request->state;
+        $address->country=$request->country;
+        $address->postal_code=$request->postal_code;
+        $address->near_by=$request->near_by;
+        $address->staff_id=$request->staff_id;
+
+        if($address->save()){
+            return [
+                'Status' => 202,
+                'message'=> 'data saved'
+        ];
+        }
+        else{
+            return [
+                'Status' => 400,
+                'message'=> 'something went wrong'
+            ];
+        }
+    }
+
+
+
+    public function staff_address_update(Request $request, $id){
+
+            $address=Address::where('staff_id',$id)->first();
+           // return $address;
+            if(is_null($address)){
+                return response()->json('Record not Found',404);
+            }
+
+ $rules=[
+            'street'=>'required',
+            'city'=>'required',
+            'postal_code' => 'required|digits:6',
+            'address_type'=>'required',
+            'country'=>'required',
+            'state'=>'required',
+            'staff_id' => 'required|numeric|exists:App\Model\StaffDetail,id'
+        ];
+
+            $result=$address->update($request->all());
+    
+            if($result){
+                return [
+                    'Status' => 202,
+                    'message'=> 'data updated'
+            ];
+            }
+            else{
+                return [
+                    'Status' => 400,
+                    'message'=> 'something went wrong'
+                ];
+            }
+        }
+
+
+
 }
