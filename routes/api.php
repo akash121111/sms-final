@@ -47,6 +47,11 @@ Route::post('/v1/student/parent/new','\App\Http\Controllers\StudentController@pa
 Route::post('/v1/student/academic/new','\App\Http\Controllers\StudentController@student_academic_store');  //done
 
 
+//student document create post api
+
+Route::post('/v1/student/document/new','\App\Http\Controllers\StudentController@student_document_store');  //done
+
+
 
 
 
@@ -67,6 +72,10 @@ Route::post('/v1/staff/bank/new','\App\Http\Controllers\StaffDetailController@st
 
 Route::post('/v1/staff/qualification/new','\App\Http\Controllers\StaffDetailController@staff_qualification_store');  //done
 
+
+//student document create post api
+
+Route::post('/v1/staff/document/new','\App\Http\Controllers\StaffController@staff_document_store');  //done
 
 
 

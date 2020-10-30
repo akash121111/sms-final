@@ -8,6 +8,7 @@ use App\Models\Address;
 use App\Models\BankDetail;
 use App\Models\ParentDetail;
 use App\Models\StudentAcademic;
+use App\Models\StudentDocument;
 
 use Carbon\Carbon;
 use Validator;
@@ -469,19 +470,21 @@ class StudentController extends Controller
     }
 
 
-    public function document_store(Request $request)
+    public function student_document_store(Request $request)
     {
         //
-        $documents = new StaffDocument();
+        $documents = new StudentDocument();
         $file_name = Carbon::now()->timestamp;
-        $path = '/staff/' . $request->staff_id;
+        $path = '/student/' . $request->student_id;
         $rules = [
             'aadhar_card' => 'file|required|mimes:pdf,docx',
-            'pan_card' => 'file|required|mimes:pdf,docx',
-            'resume' => 'file|required|mimes:pdf,docx',
-            'address_proof' => 'file|required|mimes:pdf,docx',
-            'staff_id' => 'required|exists:App\StaffDetail,id'
-
+            'birth_certificate' => 'file|required|mimes:pdf,docx',
+            'tc' => 'file|nullable|mimes:pdf,docx',
+            'father_aadhar' => 'file|nullable|mimes:pdf,docx',
+            'mother_aadhar' => 'file|nullable|mimes:pdf,docx',
+            'address_proof' => 'file|nullable|mimes:pdf,docx',
+            'student_id' => 'required|exists:App\Student,id'
+            
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -493,24 +496,32 @@ class StudentController extends Controller
             $request->file('aadhar_card')->move(public_path($path), '/ac' .$file_name);
             $documents->aadhar_card = url('/api'.$path . '/ac' . $file_name);
         }
-        if (!is_null($request->file('pan_card'))) {
-            $request->file('pan_card')->move(public_path($path), '/pan' .$file_name);
-            $documents->pan_Card = url('/api'.$path . '/pan' . $file_name);
+        if (!is_null($request->file('birth_certificate'))) {
+            $request->file('birth_certificate')->move(public_path($path), '/bc' .$file_name);
+            $documents->birth_certificate = url('/api'.$path . '/bc' . $file_name);
         }
-        if (!is_null($request->file('resume'))){
-            $request->file('resume')->move(public_path($path), '/r' .$file_name);
-            $documents->resume = url('/api'.$path . '/r' . $file_name);
+        if (!is_null($request->file('tc'))){
+            $request->file('tc')->move(public_path($path), '/tc' .$file_name);
+            $documents->tc = url('/api'.$path . '/tc' . $file_name);
+        }
+        if (!is_null($request->file('father_aadhar'))){
+            $request->file('father_aadhar')->move(public_path($path), '/fa' .$file_name);
+            $documents->father_aadhar = url('/api'.$path . '/fa' . $file_name);
+        }
+        if (!is_null($request->file('mother_aadhar'))){
+            $request->file('mother_aadhar')->move(public_path($path), '/ma' .$file_name);
+            $documents->mother_aadhar = url('/api'.$path . '/ma' . $file_name);
         }
         if(!is_null($request->file('address_proof'))){
             $request->file('address_proof')->move(public_path($path), '/add' .$file_name);
             $documents->address_proof=url('/api'.$path . '/add' . $file_name);
         }
-        $documents->staff_id=$request->staff_id;
+        $documents->student_id=$request->student_id;
 
         if($documents->save()){
             return [
                 'Status' => 202,
-                'message' => 'staff documents saved'
+                'message' => 'student documents saved'
             ];
         }
         else{
