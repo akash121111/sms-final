@@ -104,6 +104,13 @@ Route::match(['put','patch'],'/v1/staff/address/edit/{id}','\App\Http\Controller
 Route::match(['put','patch'],'/v1/staff/bank/edit/{id}','\App\Http\Controllers\StaffDetailController@staff_bank_update'); //done 
 
 
+//staff qualification update api
+
+Route::match(['put','patch'],'/v1/staff/qualification/edit/{id}/{type}','\App\Http\Controllers\StaffDetailController@staff_qualification_update'); //done 
+
+
+
+
 
 
 //authentication route

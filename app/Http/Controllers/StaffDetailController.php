@@ -308,5 +308,31 @@ class StaffDetailController extends Controller
     }
 
 
+    public function staff_qualification_update(Request $request, $id ,$type){
+
+        $qualification=StaffQualification::where('staff_id',$id)
+                                            ->where('qualification_type',$type)
+                                            ->first();
+        if(is_null($qualification)){
+            return response()->json('Record not Found',404);
+        }
+        $result=$qualification->update($request->all());
+
+        if($result){
+            return [
+                'Status' => 202,
+                'message'=> 'data updated',
+                'data'=>$qualification
+        ];
+        }
+        else{
+            return [
+                'Status' => 400,
+                'message'=> 'something went wrong'
+            ];
+        }
+    }
+
+
 
 }
