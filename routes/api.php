@@ -81,7 +81,9 @@ Route::match(['put','patch'],'/v1/student/address/edit/{id}','\App\Http\Controll
 
 Route::match(['put','patch'],'/v1/student/bank/edit/{id}','\App\Http\Controllers\StudentController@student_bank_update'); //done 
 
+//student update  api
 
+Route::match(['put','patch'],'/v1/student/parent/edit/{id}','\App\Http\Controllers\StudentController@parent_update'); //done 
 
 
 //staff update  api

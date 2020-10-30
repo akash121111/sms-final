@@ -333,6 +333,67 @@ class StudentController extends Controller
             }
     
         }
+
+
+
+    public function parent_update(Request $request, $id){
+
+        $parent=ParentDetail::where('student_id',$id)->first();
+
+        if(is_null($parent)){
+            return response()->json('Record not Found',404);
+        }
+
+
+        $rules=[
+            'father_name'=>'string|max:255',
+            'father_contact1'=>'numeric',
+            'father_contact2'=>'numeric',
+            'father_email'=>'email',
+            'father_dob'=>'date',
+            'father_occupation'=>'string|max:255',
+            'father_picture' => 'nullable',
+
+            'mother_name'=>'string|max:255',
+            'mother_contact1'=>'numeric',
+            'mother_contact2'=>'numeric',
+            'mother_email'=>'email',
+            'mother_dob'=>'date',
+            'mother_occupation'=>'string|max:255',
+            'mother_picture' => 'nullable',
+
+            'local_gardian_name'=>'string|max:255',
+            'local_gardian_contact'=>'numeric',
+            'local_gardian_email'=>'email'
+            
+        
+            
+
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if($validator->fails()){
+            return response()->json($validator->errors(),400);
+        }
+
+        $result=$parent->update($request->all());
+
+        if($result){
+            return [
+                'Status' => 202,
+                'message'=> 'data updated',
+                'data'=>$parent
+        ];
+        }
+        else{
+            return [
+                'Status' => 400,
+                'message'=> 'something went wrong'
+            ];
+        }
+    }
+
     
 
 }
