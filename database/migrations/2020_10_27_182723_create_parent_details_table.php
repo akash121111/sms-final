@@ -23,6 +23,14 @@ class CreateParentDetailsTable extends Migration
             $table->string('father_occupation')->nullable();
             $table->string('father_picture')->nullable();
 
+            $table->string('mother_name');
+            $table->unsignedBigInteger('mother_contact1');
+            $table->unsignedBigInteger('mother_contact2')->nullable();
+            $table->string('mother_email')->unique()->nullable();
+            $table->date('mother_dob')->nullable();
+            $table->string('mother_occupation')->nullable();
+            $table->string('mother_picture')->nullable();
+
             $table->string('local_gardian_name')->nullable();
             $table->unsignedBigInteger('local_gardian_contact')->nullable();
             $table->string('local_gardian_email')->unique()->nullable();

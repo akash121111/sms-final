@@ -6,6 +6,7 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Models\Address;
 use App\Models\BankDetail;
+use App\Models\ParentDetail;
 
 use Carbon\Carbon;
 use Validator;
@@ -253,5 +254,85 @@ class StudentController extends Controller
                 ];
             }
         }
+
+
+        public function parent_store(Request $request){
+
+            $parent=new ParentDetail();
+    
+            $rules=[
+                'father_name'=>'required|string|max:255',
+                'father_contact1'=>'required|numeric',
+                'father_contact2'=>'nullable|numeric',
+                'father_email'=>'required|email',
+                'father_dob'=>'required|date',
+                'father_occupation'=>'required|string|max:255',
+                'father_picture' => 'nullable',
+
+                'mother_name'=>'required|string|max:255',
+                'mother_contact1'=>'required|numeric',
+                'mother_contact2'=>'nullable|numeric',
+                'mother_email'=>'nullable|email',
+                'mother_dob'=>'required|date',
+                'mother_occupation'=>'required|string|max:255',
+                'mother_picture' => 'nullable',
+
+                'local_gardian_name'=>'nullable|string|max:255',
+                'local_gardian_contact'=>'nullable|numeric',
+                'local_gardian_email'=>'nullable|email',
+
+                'student_id' => 'required|numeric|exists:App\Models\Student,id'
+                
+            
+                
+    
+            ];
+    
+            $validator = Validator::make($request->all(), $rules);
+    
+            if($validator->fails()){
+                return response()->json($validator->errors(),400);
+            }
+            $parent->father_name=$request->father_name;
+            $parent->father_contact1=$request->father_contact1;
+            $parent->father_contact2 =$request->father_contact2;
+            $parent->father_email=$request->father_email;
+            $parent->father_dob=$request->father_dob;
+            $parent->father_occupation=$request->father_occupation;
+            $parent->father_picture=$request->father_picture;
+
+            $parent->mother_name=$request->mother_name;
+            $parent->mother_contact1=$request->mother_contact1;
+            $parent->mother_contact2 =$request->mother_contact2;
+            $parent->mother_email=$request->mother_email;
+            $parent->mother_dob=$request->mother_dob;
+            $parent->mother_occupation=$request->mother_occupation;
+            $parent->mother_picture=$request->mother_picture;
+
+            $parent->local_gardian_name=$request->local_gardian_name;
+            $parent->local_gardian_contact=$request->local_gardian_contact;
+            $parent->local_gardian_email =$request->local_gardian_email;
+    
+            $parent->student_id=$request->student_id;
+            
+           
+           
+            
+    
+            if($parent->save()){
+                return [
+                    'Status' => 202,
+                    'message'=> 'data saved'
+            ];
+            }
+            else{
+                return [
+                    'Status' => 400,
+                    'message'=> 'something went wrong'
+                ];
+            }
+    
+        }
+    
 
 }

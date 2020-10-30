@@ -36,7 +36,12 @@ Route::post('/v1/student/address/new','\App\Http\Controllers\StudentController@s
 
 //student bank create post api
 
-Route::post('/v1/student/bank/new','\App\Http\Controllers\StudentController@student_bank_store');  
+Route::post('/v1/student/bank/new','\App\Http\Controllers\StudentController@student_bank_store');  //done
+
+//parent create post api
+
+Route::post('/v1/student/parent/new','\App\Http\Controllers\StudentController@parent_store');  //done
+
 
 
 
