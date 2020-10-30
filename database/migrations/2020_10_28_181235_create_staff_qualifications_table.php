@@ -19,8 +19,8 @@ class CreateStaffQualificationsTable extends Migration
             $table->string('qualification')->nullable();
             $table->string('institute_name')->nullable();
             $table->string('board_name')->nullable();
-            $table->tinyInteger('percentage')->nullable();
-            $table->tinyInteger('year')->nullable();
+            $table->float('percentage')->nullable();
+            $table->Integer('year')->nullable();
 
             $table->bigInteger('staff_id')->unsigned()->nullable();
             $table->foreign('staff_id')->references('id')->on('staff_details');

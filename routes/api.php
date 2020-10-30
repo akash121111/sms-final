@@ -60,6 +60,11 @@ Route::post('/v1/staff/address/new','\App\Http\Controllers\StaffDetailController
 Route::post('/v1/staff/bank/new','\App\Http\Controllers\StaffDetailController@staff_bank_store');  //done
 
 
+//staff creation post api
+
+Route::post('/v1/staff/qualification/new','\App\Http\Controllers\StaffDetailController@staff_qualification_store');  //done
+
+
 
 
 /*

@@ -6,8 +6,9 @@ use App\Models\StaffDetail;
 use Illuminate\Http\Request;
 use App\Models\Address;
 use App\Models\BankDetail;
+use App\Models\StaffQualification;
 
-use Carbon\Carbon;
+use Carbon\Carbon;  
 use Validator;
 
 class StaffDetailController extends Controller
@@ -255,6 +256,47 @@ class StaffDetailController extends Controller
                 'Status' => 202,
                 'message'=> 'data updated',
                 'data'=>$bank
+        ];
+        }
+        else{
+            return [
+                'Status' => 400,
+                'message'=> 'something went wrong'
+            ];
+        }
+    }
+
+
+    public function staff_qualification_store(Request $request){
+        $qualification=new StaffQualification();
+
+        $rules=[
+            'qualification_type'=>'required',
+            'qualification' => 'required',
+            'institute_name'=>'required|string|max:255',
+            'board_name'=>'required|string',
+            'percentage'=>'required|numeric',
+            'year'=>'required|numeric',
+            'staff_id' => 'required|numeric|exists:App\Models\StaffDetail,id'
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if($validator->fails()){
+            return response()->json($validator->errors(),400);
+        }
+        $qualification->qualification_type=$request->qualification_type;
+        $qualification->qualification=$request->qualification;
+        $qualification->institute_name=$request->institute_name;
+        $qualification->board_name=$request->board_name;
+        $qualification->percentage=$request->percentage;
+        $qualification->year=$request->year;
+        $qualification->staff_id=$request->staff_id;
+
+        if($qualification->save()){
+            return [
+                'Status' => 202,
+                'message'=> 'data saved'
         ];
         }
         else{
