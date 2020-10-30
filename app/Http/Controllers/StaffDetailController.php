@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\StaffDetail;
 use Illuminate\Http\Request;
 use App\Models\Address;
+use App\Models\BankDetail;
 
 use Carbon\Carbon;
 use Validator;
@@ -105,7 +106,8 @@ class StaffDetailController extends Controller
         if($result){
             return [
                 'Status' => 202,
-                'message'=> 'data updated'
+                'message'=> 'data updated',
+                'data'=>$result
         ];
         }
         else{
@@ -185,7 +187,8 @@ class StaffDetailController extends Controller
             if($result){
                 return [
                     'Status' => 202,
-                    'message'=> 'data updated'
+                    'message'=> 'data updated',
+                    'data'=>$result
             ];
             }
             else{
@@ -195,6 +198,72 @@ class StaffDetailController extends Controller
                 ];
             }
         }
+
+
+
+         public function staff_bank_store(Request $request){
+
+        $bank = new BankDetail();
+
+        $rules=[
+            'bank_name'=>'required|string',
+            'account_number' => 'required|numeric',
+            'ifsc_code'=>'required|alpha_num',
+            'staff_id' => 'required|numeric|exists:App\Models\StaffDetail,id'
+
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if($validator->fails()){
+            return response()->json($validator->errors(),400);
+        }
+
+        $bank->bank_name=$request->bank_name;
+        $bank->account_number=$request->account_number;
+        $bank->ifsc_code=$request->ifsc_code;
+        $bank->account_type=$request->account_type;
+        $bank->staff_id=$request->staff_id;
+
+        if($bank->save()){
+            return [
+                'Status' => 202,
+                'message'=> 'data saved'
+        ];
+        }
+        else{
+            return [
+                'Status' => 400,
+                'message'=> 'something went wrong'
+            ];
+        }
+    }
+
+
+
+
+         public function staff_bank_update(Request $request, $id){
+
+        $bank=BankDetail::where('staff_id',$id)->first();
+        if(is_null($bank)){
+            return response()->json('Record not Found',404);
+        }
+        $result=$bank->update($request->all());
+
+        if($result){
+            return [
+                'Status' => 202,
+                'message'=> 'data updated',
+                'data'=>$bank
+        ];
+        }
+        else{
+            return [
+                'Status' => 400,
+                'message'=> 'something went wrong'
+            ];
+        }
+    }
 
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Models\Address;
+use App\Models\BankDetail;
 
 use Carbon\Carbon;
 use Validator;
@@ -187,5 +188,70 @@ class StudentController extends Controller
             }
         }
 
+
+
+        public function student_bank_store(Request $request){
+
+            $bank = new BankDetail();
+    
+            $rules=[
+                'bank_name'=>'required|string',
+                'account_number' => 'required|numeric',
+                'ifsc_code'=>'required|string',
+                'student_id' => 'required|numeric|exists:App\Models\Student,id'
+    
+            ];
+    
+            $validator = Validator::make($request->all(), $rules);
+    
+            if($validator->fails()){
+                return response()->json($validator->errors(),400);
+            }
+    
+            $bank->bank_name=$request->bank_name;
+            $bank->account_number=$request->account_number;
+            $bank->ifsc_code=$request->ifsc_code;
+            $bank->account_type=$request->account_type;
+            $bank->student_id=$request->student_id;
+    
+            if($bank->save()){
+                return [
+                    'Status' => 202,
+                    'message'=> 'data saved'
+            ];
+            }
+            else{
+                return [
+                    'Status' => 400,
+                    'message'=> 'something went wrong'
+                ];
+            }
+        }
+    
+    
+    
+    
+             public function student_bank_update(Request $request, $id){
+    
+            $bank=BankDetail::where('student_id',$id)->first();
+            if(is_null($bank)){
+                return response()->json('Record not Found',404);
+            }
+            $result=$bank->update($request->all());
+    
+            if($result){
+                return [
+                    'Status' => 202,
+                    'message'=> 'data updated',
+                    'data'=>$bank
+            ];
+            }
+            else{
+                return [
+                    'Status' => 400,
+                    'message'=> 'something went wrong'
+                ];
+            }
+        }
 
 }

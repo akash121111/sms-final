@@ -34,14 +34,26 @@ Route::post('/v1/student/new','\App\Http\Controllers\StudentController@student_s
 Route::post('/v1/student/address/new','\App\Http\Controllers\StudentController@student_address_store');  //done
 
 
+//student bank create post api
 
-//staff store post api
+Route::post('/v1/student/bank/new','\App\Http\Controllers\StudentController@student_bank_store');  
+
+
+
+
+
+//staff creation post api
 
 Route::post('/v1/staff/new','\App\Http\Controllers\StaffDetailController@staff_store');  //done
 
-//staff address store post api
+//staff address create post api
 
 Route::post('/v1/staff/address/new','\App\Http\Controllers\StaffDetailController@staff_address_store');  //done
+
+//staff bank create post api
+
+Route::post('/v1/staff/bank/new','\App\Http\Controllers\StaffDetailController@staff_bank_store');  //done
+
 
 
 
@@ -60,15 +72,24 @@ Route::match(['put','patch'],'/v1/student/edit/{id}','\App\Http\Controllers\Stud
 
 Route::match(['put','patch'],'/v1/student/address/edit/{id}','\App\Http\Controllers\StudentController@student_address_update'); //done 
 
+//student bank update api
 
-//student update  api
+Route::match(['put','patch'],'/v1/student/bank/edit/{id}','\App\Http\Controllers\StudentController@student_bank_update'); //done 
+
+
+
+
+//staff update  api
 
 Route::match(['put','patch'],'/v1/staff/edit/{id}','\App\Http\Controllers\StaffDetailController@staff_update'); //done 
 
-//student address update api
+//staff address update api
 
 Route::match(['put','patch'],'/v1/staff/address/edit/{id}','\App\Http\Controllers\StaffDetailController@staff_address_update'); //done 
 
+//staff bank update api
+
+Route::match(['put','patch'],'/v1/staff/bank/edit/{id}','\App\Http\Controllers\StaffDetailController@staff_bank_update'); //done 
 
 
 
