@@ -42,6 +42,9 @@ Route::post('/v1/student/bank/new','\App\Http\Controllers\StudentController@stud
 
 Route::post('/v1/student/parent/new','\App\Http\Controllers\StudentController@parent_store');  //done
 
+//student academic create post api
+
+Route::post('/v1/student/academic/new','\App\Http\Controllers\StudentController@student_academic_store');  //done
 
 
 
@@ -86,9 +89,14 @@ Route::match(['put','patch'],'/v1/student/address/edit/{id}','\App\Http\Controll
 
 Route::match(['put','patch'],'/v1/student/bank/edit/{id}','\App\Http\Controllers\StudentController@student_bank_update'); //done 
 
-//student update  api
+//parent update  api
 
 Route::match(['put','patch'],'/v1/student/parent/edit/{id}','\App\Http\Controllers\StudentController@parent_update'); //done 
+
+//student academic update  api
+
+Route::match(['put','patch'],'/v1/student/academic/edit/{id}','\App\Http\Controllers\StudentController@student_academic_update'); //done 
+
 
 
 //staff update  api

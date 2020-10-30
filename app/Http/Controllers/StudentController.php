@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Address;
 use App\Models\BankDetail;
 use App\Models\ParentDetail;
+use App\Models\StudentAcademic;
 
 use Carbon\Carbon;
 use Validator;
@@ -395,5 +396,77 @@ class StudentController extends Controller
     }
 
     
+
+    public function student_academic_store(Request $request){
+
+        $academic = new StudentAcademic();
+
+        $rules=[
+            'registration_number'=>'required|numeric',
+            'admission_number' => 'required|string',
+            'admission_date'=>'required|date',
+            'enrollment_number'=>'required|numeric',
+            'roll_number'=>'required|numeric',
+            'admission_class'=>'required|string',
+
+
+            'student_id' => 'required|numeric|exists:App\Models\Student,id'
+
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if($validator->fails()){
+            return response()->json($validator->errors(),400);
+        }
+
+        $academic->registration_number=$request->registration_number;
+        $academic->admission_number=$request->admission_number;
+        $academic->admission_date=$request->admission_date;
+        $academic->enrollment_number=$request->enrollment_number;
+        $academic->roll_number=$request->roll_number;
+        $academic->admission_class=$request->admission_class;
+        $academic->student_id=$request->student_id;
+
+        if($academic->save()){
+            return [
+                'Status' => 202,
+                'message'=> 'data saved'
+        ];
+        }
+        else{
+            return [
+                'Status' => 400,
+                'message'=> 'something went wrong'
+            ];
+        }
+    }
+
+
+
+
+         public function student_academic_update(Request $request, $id){
+
+        $academic=StudentAcademic::find($id);
+        if(is_null($academic)){
+            return response()->json('Record not Found',404);
+        }
+        $result=$academic->update($request->all());
+
+        if($result){
+            return [
+                'Status' => 202,
+                'message'=> 'data updated',
+                'data'=>$academic
+        ];
+        }
+        else{
+            return [
+                'Status' => 400,
+                'message'=> 'something went wrong'
+            ];
+        }
+    }
+
 
 }
